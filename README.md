@@ -16,21 +16,6 @@ A collection of projects built while learning React fundamentals (state, props, 
 
 \- \*\*Concepts\*\*: useState, props, list rendering, conditional rendering
 
-\- \*\*\[Live Demo](#)\*\* | \*\*\[Code](./todo-app)\*\*
-
-
-
-\### 2. Quiz App (Coming Soon)
-
-\- Multi-step quiz application
-
-
-
-\### 3. Expense Tracker (Coming Soon)
-
-\- Track and categorize expenses
-
-
 
 \## Tech Stack
 
