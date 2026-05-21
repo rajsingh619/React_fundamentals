@@ -1,60 +1,45 @@
 import MovieCard from "./MovieCard";
+import { useState, useEffect } from "react";
 
-export default function ContentArea() {
+export default function ContentArea({ searchText }) {
+  const [moviesObject, setMoviesObject] = useState({
+    Search: [
+      {
+        Title: "",
+      },
+    ],
+  });
+  //search functionality will go here
+  useEffect(() => {
+    fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=8c34f061&s=${searchText}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((resData) => setMoviesObject(resData));
+  }, [searchText]);
+
+  console.log(moviesObject);
+
+  const moviebjectList = moviesObject.Search;
+  // const rows = Math.ceil(moviebjectList.length / 3);
+
   return (
     <>
-      <div className="flex flex-col m-8">
-        <div className="flex justify-around ">
-          <MovieCard
-            title={"Spiderman - The Amazingaaaaaaaaaaaaaaaaaaa"}
-            imgSrc={
-              "https://m.media-amazon.com/images/M/MV5BNzI0MmQyMzYtZDAzNi00ZWZiLWFjMTgtNzQwOTRjYTFlM2Y3XkEyXkFqcGc@._V1_SX300.jpg"
-            }
-            alt={"The amazing spider"}
-            year={2021}
-          />
-          <MovieCard
-            title={"Batman Begins"}
-            imgSrc={
-              "https://m.media-amazon.com/images/M/MV5BMzA2NDQzZDEtNDU5Ni00YTlkLTg2OWEtYmQwM2Y1YTBjMjFjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-            }
-            alt={"Batman Begins"}
-            year={2021}
-          />
-          <MovieCard
-            title={"The Batman"}
-            imgSrc={
-              "https://m.media-amazon.com/images/M/MV5BMmU5NGJlMzAtMGNmOC00YjJjLTgyMzUtNjAyYmE4Njg5YWMyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-            }
-            alt={"The amazing spider"}
-            year={2021}
-          />
-        </div>
-         <div className="flex justify-around m-8">
-          <MovieCard
-            title={"Spiderman - The Amazing"}
-            imgSrc={
-              "https://m.media-amazon.com/images/M/MV5BZTJkYjdmYjYtOGMyNC00ZGU1LThkY2ItYTc1OTVlMmE2YWY1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-            }
-            alt={"The amazing spider"}
-            year={2021}
-          />
-          <MovieCard
-            title={"Spiderman - The Amazing"}
-            imgSrc={
-              "https://m.media-amazon.com/images/M/MV5BZTliMDVkYTktZDdlMS00NTAwLWJhNzYtMWIwMDZjN2ViMGFiXkEyXkFqcGc@._V1_SX300.jpg"
-            }
-            alt={"The amazing spider"}
-            year={2021}
-          />
-          <MovieCard
-            title={"Spiderman - The Amazing"}
-            imgSrc={
-              "https://m.media-amazon.com/images/M/MV5BNzI0MmQyMzYtZDAzNi00ZWZiLWFjMTgtNzQwOTRjYTFlM2Y3XkEyXkFqcGc@._V1_SX300.jpg"
-            }
-            alt={"The amazing spider"}
-            year={2021}
-          />
+      <p className="text-white m-8">Search Results for: {searchText} </p>
+      <div className="flex flex-col">
+        <div className="flex  flex-wrap justify-center gap-20 m-8">
+          {moviebjectList.map((movies) => {
+            return (
+              <MovieCard
+                title={movies.Title}
+                imgSrc={
+                  movies.Poster
+                }
+                alt={movies.Title}
+                year={movies.Year}
+              />
+            );
+          })}
         </div>
       </div>
     </>
