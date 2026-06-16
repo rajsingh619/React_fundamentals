@@ -3,44 +3,56 @@ import { useState, useEffect } from "react";
 
 export default function ContentArea({ searchText }) {
   const [moviesObject, setMoviesObject] = useState({
-    Search: [
-      {
-        Title: "",
-      },
-    ],
+    Search: [],
   });
+  const [isLoading, setIsLoading] = useState(false);
   //search functionality will go here
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=8c34f061&s=${searchText}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((resData) => setMoviesObject(resData));
+    async function fetchMovies() {
+      setIsLoading(true);
+      try{
+        const response = await fetch(
+        `http://www.omdbapi.com/?apikey=8c34f061&i=tt3896198&s=${searchText}`,
+      );
+      if(!response.ok){
+        throw new Error("Failed to fetch movies...")
+      }
+      const resData = await response.json();
+      setMoviesObject(resData);
+      }catch(error){
+        
+      }
+      setIsLoading(false);
+    }
+    fetchMovies();
   }, [searchText]);
 
-  console.log(moviesObject);
-
-  const moviebjectList = moviesObject.Search;
-  // const rows = Math.ceil(moviebjectList.length / 3);
+  const movieObjectList = moviesObject.Search || [];
 
   return (
     <>
-      <p className="text-white m-8">Search Results for: {searchText} </p>
       <div className="flex flex-col">
-        <div className="flex  flex-wrap justify-center gap-20 m-8">
-          {moviebjectList.map((movies) => {
-            return (
-              <MovieCard
-                title={movies.Title}
-                imgSrc={
-                  movies.Poster
-                }
-                alt={movies.Title}
-                year={movies.Year}
-              />
-            );
-          })}
-        </div>
+        {isLoading && <p>Loading the movies...</p>}
+          {!isLoading && movieObjectList.length>0 ? (
+            <>
+              {(searchText!="")&&<p className="">Search results for: {searchText}</p>}
+              <div className="flex  flex-wrap justify-center gap-20 m-8">
+              {movieObjectList.map((movies) => {
+                return (
+                  <MovieCard
+                    title={movies.Title}
+                    imgSrc={movies.Poster}
+                    alt={movies.Title}
+                    year={movies.Year}
+                    key={movies.imdbID}
+                  />
+                );
+              })}
+              </div>
+            </>
+          ) : (
+            <p>Search for your favorite movies</p>
+          )}
       </div>
     </>
   );

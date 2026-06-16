@@ -5,7 +5,7 @@ import ContentArea from "./components/ContentArea";
 
 
 function App() {
-  const [searchText, setSearchText] = useState("batman");
+  const [searchText, setSearchText] = useState("");
 
   function handleSearch(searchValue){
     setSearchText(searchValue)
