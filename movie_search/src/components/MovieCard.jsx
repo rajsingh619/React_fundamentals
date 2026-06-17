@@ -1,4 +1,10 @@
 export default function MovieCard({ title, imgSrc, alt, year }) {
+  function handleClick(){
+    console.log("movie clicked")
+  }
+
+
+
   return (
     <div className="w-80 h-fit m-4">
       <img
@@ -11,7 +17,7 @@ hover:shadow-2xl "
       />
       <p className="text-white text-xl font-bold truncate">{title}</p>
       <p className="text-white font-semibold text-xl">Year: {year}</p>
-      <button  className="text-white underline hover:text-blue-200">show details</button>
+      <button onClick={handleClick}  className="text-white underline hover:text-blue-200">show details</button>
     </div>
   );
 }

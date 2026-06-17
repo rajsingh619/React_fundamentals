@@ -1,11 +1,14 @@
 import MovieCard from "./MovieCard";
 import { useState, useEffect } from "react";
+import Loading from "./Loading";
+import ErrorComponent from "./ErrorComponent";
 
 export default function ContentArea({ searchText }) {
   const [moviesObject, setMoviesObject] = useState({
     Search: [],
   });
   const [isLoading, setIsLoading] = useState(false);
+  const[error,setError] = useState();
   //search functionality will go here
   useEffect(() => {
     async function fetchMovies() {
@@ -18,24 +21,35 @@ export default function ContentArea({ searchText }) {
         throw new Error("Failed to fetch movies...")
       }
       const resData = await response.json();
+      if(resData.Response=="False"){
+        throw new Error("No movies found please enter valid name")
+      }
       setMoviesObject(resData);
       }catch(error){
-        
+        setError({
+          message: error.message || "Internal failure, please try again later"
+        });
       }
       setIsLoading(false);
     }
     fetchMovies();
   }, [searchText]);
 
+  if(error){
+    return (
+      <ErrorComponent error = {error}/>
+    )
+  }
+
   const movieObjectList = moviesObject.Search || [];
 
   return (
     <>
       <div className="flex flex-col">
-        {isLoading && <p>Loading the movies...</p>}
+        {isLoading && <Loading/>}
           {!isLoading && movieObjectList.length>0 ? (
             <>
-              {(searchText!="")&&<p className="">Search results for: {searchText}</p>}
+              {(searchText!="")&&<p className="text-white text-xl m-4">Search results for : <span className="font-semibold text-red-400">{searchText}</span></p>}
               <div className="flex  flex-wrap justify-center gap-20 m-8">
               {movieObjectList.map((movies) => {
                 return (
