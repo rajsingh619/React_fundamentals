@@ -54,6 +54,7 @@ export default function ContentArea({ searchText }) {
               {movieObjectList.map((movies) => {
                 return (
                   <MovieCard
+                    id = {movies.imdbID}
                     title={movies.Title}
                     imgSrc={movies.Poster}
                     alt={movies.Title}

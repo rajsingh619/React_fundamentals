@@ -10,7 +10,7 @@ function App() {
   function handleSearch(searchValue){
     setSearchText(searchValue)
   }
-  console.log(searchText);
+  
 
   return (
     <div className="bg-[#31363F] min-h-screen " >
