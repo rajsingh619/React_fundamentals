@@ -15,7 +15,7 @@ export default function ContentArea({ searchText }) {
       setIsLoading(true);
       try{
         const response = await fetch(
-        `http://www.omdbapi.com/?apikey=8c34f061&i=tt3896198&s=${searchText}`,
+        `https://www.omdbapi.com/?apikey=8c34f061&i=tt3896198&s=${searchText}`,
       );
       if(!response.ok){
         throw new Error("Failed to fetch movies...")

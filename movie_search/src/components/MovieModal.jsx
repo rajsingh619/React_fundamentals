@@ -13,7 +13,7 @@ export default function MovieModal({ ref, movieId, onClose }) {
 
       try {
         const response = await fetch(
-          `http://www.omdbapi.com/?apikey=8c34f061&i=${movieId}`
+          `https://www.omdbapi.com/?apikey=8c34f061&i=${movieId}`
         );
         if(!response.ok){
           throw new Error("failed to fetch movie details...")
