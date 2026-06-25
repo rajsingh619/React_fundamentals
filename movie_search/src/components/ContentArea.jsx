@@ -66,7 +66,7 @@ export default function ContentArea({ searchText }) {
               </div>
             </>
           ) : (
-            <p>Search for your favorite movies</p>
+            <p className="text-center m-4 text-red-300 text-2xl italic font-serif">Search for your favorite movies</p>
           )}
       </div>
     </>
